@@ -21,6 +21,8 @@ namespace AsteroidGame
 
         public static int Height { get; set; }
 
+        public static int GamePoints = 0;
+
         public static void Initialize(Form form)
         {
             Width = form.Width;
@@ -119,6 +121,9 @@ namespace AsteroidGame
         /// <summary>Метод визуализации сцены</summary>
         public static void Draw()
         {
+
+            if (__SpaceShip.Energy <= 0) return;
+
             var g = __Buffer.Graphics;
             g.Clear(Color.Black);
 
@@ -128,8 +133,11 @@ namespace AsteroidGame
             foreach (var visual_object in __GameObjects)
                 visual_object?.Draw(g);
 
-            __Bullet.Draw(g);
+            __Bullet?.Draw(g);
             __SpaceShip.Draw(g);
+
+            g.DrawString($"Energy: {__SpaceShip.Energy}", new Font(FontFamily.GenericSansSerif, 14, FontStyle.Italic), Brushes.White, 10, 10);
+            g.DrawString($"Game points: {GamePoints}", new Font(FontFamily.GenericSansSerif, 14, FontStyle.Italic), Brushes.White, 10, 30);
 
             __Buffer.Render();
         }
@@ -140,25 +148,26 @@ namespace AsteroidGame
             foreach (var visual_object in __GameObjects)
                 visual_object?.Update();
 
-            __Bullet.Update();
-            if (__Bullet.Position.X > Width)
-                __Bullet = new Bullet(new Random().Next(Width));
+            __Bullet?.Update();
 
-            for(var i = 0; i < __GameObjects.Length; i++)
+            for (var i = 0; i < __GameObjects.Length; i++)
             {
                 var obj = __GameObjects[i];
                 if (obj is ICollision) // Применить "сопоставление с образцом"!
                 {
-                    var collision_object = (ICollision) obj;
-                    if (__Bullet.CheckCollision(collision_object))
+                    var collision_object = (ICollision)obj;
+                    __SpaceShip.CheckCollision(collision_object);
+                    if (__Bullet != null && __Bullet.CheckCollision(collision_object))
                     {
-                        __Bullet = new Bullet(new Random().Next(Width));
+                        __Bullet = null;
+                        //__Bullet = new Bullet(new Random().Next(Width));
                         __GameObjects[i] = null;
                         //MessageBox.Show("Астероид уничтожен!", "Столкновение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        GamePoints++;
                     }
                 }
             }
-           
+
         }
     }
 }
