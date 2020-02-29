@@ -34,14 +34,14 @@ namespace AsteroidGame.VisualObjects
 
             if (_Position.X < 0)
                 //_Direction.X *= -1;
-                _Direction = new Point(-_Direction.X, _Direction.Y);
-            if (_Position.Y < 0)
-                _Direction = new Point(_Direction.X, -_Direction.Y);
+                _Direction = new Point(-_Position.X, _Direction.Y);
+            //if (_Position.Y < 0)
+                //_Direction = new Point(Game.Height, -_Direction.Y);
 
             if(_Position.X > Game.Width)
                 _Direction = new Point(-_Direction.X, _Direction.Y);
-            if (_Position.Y > Game.Height)
-                _Direction = new Point(_Direction.X, -_Direction.Y);
+            //if (_Position.Y > Game.Height)
+            //    _Direction = new Point(0, -_Direction.Y);
         }
     }
 }

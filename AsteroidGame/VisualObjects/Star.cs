@@ -32,32 +32,11 @@ namespace AsteroidGame.VisualObjects
 
         public override void Update()
         {
-            if(_Position.Y == 0 || Position.Y == 1)
-            {
-                _Position.X -= _Direction.X;
-                if (_Position.X < 0)
-                    _Position.X = Game.Width + _Size.Width;
-            }
-            else if (_Position.Y == 2)
-            {
-                _Position.X += _Direction.X;
-                if (_Position.X > Game.Width)
-                    _Position.X = 0;
-            //}
-            //else if (_Position.Y == 3)
-            //{
-            //    _Position.Y += _Direction.Y;
-            //    if (_Position.Y < 0)
-            //        _Position.Y = Game.Height + _Size.Width;
-            //}
-            //else if (_Position.Y == 4)
-            //{
-            //    _Position.Y -= _Direction.Y;
-            //    if (_Position.Y > Game.Width)
-            //        _Position.Y = 0;
-            }
-
-
+            _Position.X -= _Direction.X;
+            if (_Position.X < 0)
+                _Position.X = Game.Width + _Size.Width;
+            
         }
+
     }
 }
