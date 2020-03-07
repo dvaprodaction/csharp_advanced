@@ -165,6 +165,7 @@ namespace AsteroidGame
                             asteroids_to_remove.Add(__Asteroids[i]);
                             GamePoints++;
                         }
+                    //patch
                 }
             }
 
